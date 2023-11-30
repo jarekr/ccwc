@@ -6,7 +6,7 @@ use std::path::{Path, PathBuf};
 
 #[derive(Parser)]
 struct Args {
-    config_path: PathBuf,
+    paths: Vec<PathBuf>,
 }
 
 
