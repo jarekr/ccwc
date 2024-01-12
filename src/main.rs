@@ -7,10 +7,16 @@ use std::path::{Path, PathBuf};
 
 #[derive(Parser)]
 struct Args {
+
     #[arg(short, long, default_value_t = false)]
     count: bool,
+
     #[arg(short, long, default_value_t = false)]
     lines: bool,
+
+    #[arg(short, long, default_value_t = false)]
+    words: bool,
+
     filepath: String
 }
 
@@ -23,31 +29,46 @@ fn main() {
         Err(e) => panic!("couldn't open file: {}", e)
     };
 
-    let any_flags = args.lines || args.count;
+    let any_flags = args.lines || args.count || args.words;
 
     let mut show_lines = true;
     let mut show_chars = true;
+    let mut show_words: bool = true;
 
     if any_flags {
         show_lines = args.lines;
         show_chars = args.count;
+        show_words = args.words;
     }
 
-    let mut result = Vec::<&str>::new();
     let mut output = String::new();
+    let char_count = text.as_bytes().len();
+    let char_count_str = char_count.to_string();
 
-    if show_chars {
-        let char_count = text.as_bytes().len();
-        let char_count_str = format!(" {:>7}", char_count.to_string());
-        output.push_str(&char_count_str);
-
-    }
+    let padding = char_count_str.len();
 
     if show_lines {
         let line_count = text.lines().count();
-        let line_count_str = format!(" {:>7}", line_count.to_string().as_str());
+        let line_count_str = format!("{:>padding$}", line_count.to_string().as_str());
         output.push_str(&line_count_str);
     }
+
+    if show_words {
+        let mut word_count: usize = 0;
+        for line in text.lines() {
+            word_count += line.split_whitespace().count();
+        }
+
+        let wc_str = format!("{:>padding$}", word_count.to_string().as_str());
+        output.push_str(&wc_str);
+    }
+
+    if show_chars {
+        let chars_str = format!(" {} ", char_count_str);
+        output.push_str(&chars_str);
+
+    }
+
 
     println!("{} {}", output, &args.filepath);
 
