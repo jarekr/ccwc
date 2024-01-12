@@ -8,6 +8,10 @@ build:
 	cargo build
 	@date
 
+.PHONY: run
+run: build
+	cp $(EXEPATH) target/wc
+
 .PHONY: test
 test: build test_suite
 	@date

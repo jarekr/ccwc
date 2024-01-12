@@ -49,7 +49,8 @@ fn main() {
 
     if show_lines {
         let line_count = text.lines().count();
-        let line_count_str = format!("{:>padding$}", line_count.to_string().as_str());
+        let pd = if output.is_empty() { 0 } else { padding };
+        let line_count_str = format!("{:>pd$}", line_count.to_string().as_str());
         output.push_str(&line_count_str);
     }
 
@@ -59,7 +60,8 @@ fn main() {
             word_count += line.split_whitespace().count();
         }
 
-        let wc_str = format!("{:>padding$}", word_count.to_string().as_str());
+        let pd = if output.is_empty() { 0 } else { padding };
+        let wc_str = format!("{:>pd$}", word_count.to_string().as_str());
         output.push_str(&wc_str);
     }
 
