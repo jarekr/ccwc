@@ -34,21 +34,21 @@ fn main() {
     }
 
     let mut result = Vec::<&str>::new();
-    let mut format_str = Vec::<&str>::new();
+    let mut output = String::new();
 
     if show_chars {
         let char_count = text.as_bytes().len();
-        result.push(char_count.to_string().as_str());
-        format_str.push("{}");
+        let char_count_str = format!(" {:>7}", char_count.to_string());
+        output.push_str(&char_count_str);
+
     }
 
     if show_lines {
         let line_count = text.lines().count();
-        result.push(line_count.to_string().as_str());
-        format_str.push("{}");
+        let line_count_str = format!(" {:>7}", line_count.to_string().as_str());
+        output.push_str(&line_count_str);
     }
 
-
-    println!("{} {}", char_count, &args.filepath);
+    println!("{} {}", output, &args.filepath);
 
 }
