@@ -64,7 +64,8 @@ fn main() {
     }
 
     if show_chars {
-        let chars_str = format!(" {} ", char_count_str);
+        let pd = if output.is_empty() { 0 } else { padding + 1 };
+        let chars_str = format!("{:>pd$}", char_count_str);
         output.push_str(&chars_str);
 
     }

@@ -1,8 +1,7 @@
 
 EXEPATH=./target/debug/ccwc
 
-all:
-	echo "run test"
+all: test
 
 .PHONY: build
 build:
